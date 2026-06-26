@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>폐기물 검색</title>
+</head><style>
+
+body{
+    font-family: Arial, sans-serif;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+#search{
+    width:300px;
+    padding:10px;
+    font-size:16px;
+}
+
+button{
+    padding:10px 15px;
+    font-size:16px;
+}
+
+#result{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:20px;
+    margin-top:20px;
+}
+
+.card{
+    border:1px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.card h3{
+    text-align:center;
+    padding:10px;
+}
+
+.detail{
+    border:1px solid #ccc;
+    padding:20px;
+    border-radius:10px;
+}
+
+.detail img{
+    max-width:100%;
+}
+
+.photo-box{
+    display:inline-block;
+    margin:10px;
+    text-align:center;
+}
+
+.detail-photo{
+    width:250px;
+    height:250px;
+    object-fit:cover;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+@media (max-width: 768px){
+
+    body{
+        padding:10px;
+    }
+
+    #search{
+        width:100%;
+        box-sizing:border-box;
+        margin-bottom:10px;
+    }
+
+    button{
+        width:100%;
+    }
+
+    #result{
+        grid-template-columns:1fr;
+    }
+
+    .card img{
+        height:auto;
+    }
+
+    .detail img{
+        width:100%;
+        max-width:100%;
+    }
+
+    .detail{
+    width:100%;
+    box-sizing:border-box;
+}
+
+}
+
+
+</style>
+
+<body>
+
+<h1>폐기물 검색</h1>
+
+<input
+id="search"
+placeholder="검색어 입력"
+list="items">
+
+<datalist id="items"></datalist>
+
+<button onclick="searchItem()">검색</button>
+
+<div id="result"></div>
+
+<script src="data.js"></script>
+
+<script>
+
+const list = document.getElementById("items");
+
+Object.keys(data).forEach(function(item){
+
+const option = document.createElement("option");
+
+option.value = item;
+
+list.appendChild(option);
+
+});
+
+document.getElementById("search").addEventListener("keydown", function(e){
+
+if(e.key === "Enter"){
+
+searchItem();
+
+}
+
+});
+
+function searchItem(){
+
+const q = document.getElementById("search").value.trim();
+
+let txt = "";
+
+Object.keys(data).forEach(function(item){
+
+const found =
+
+q === ""
+
+||
+
+item.includes(q)
+
+||
+
+data[item].keywords.some(
+keyword => keyword.includes(q)
+);
+
+if(found){
+
+txt += `
+
+<div class="card"
+onclick="showDetail('${item}')">
+
+<img
+src="${data[item].images[0].file}">
+
+<h3>${item}</h3>
+
+</div>
+`;
+
+}
+
+});
+
+if(txt === ""){
+
+txt = `
+<h2>검색 결과가 없습니다.</h2>
+`;
+
+}
+
+document.getElementById("result").innerHTML = txt;
+
+}
+
+function showDetail(name){
+
+let imgs = "";
+
+data[name].images.forEach(function(img){
+
+imgs += `
+<div class="photo-box">
+
+<img
+src="${img.file}"
+class="detail-photo">
+
+<br>
+
+<b>${img.title}</b>
+
+</div>
+`;
+
+});
+
+document.getElementById("result").innerHTML = `
+
+<div class="detail">
+
+<h2>${name}</h2>
+
+${imgs}
+
+<p>${data[name].desc}</p>
+
+<p>
+<b>배출방법</b><br>
+${data[name].method}
+</p>
+
+<button onclick="searchItem()">
+목록으로
+</button>
+
+</div>
+
+`;
+
+}
+
+searchItem();
+
+</script>
+
+</body>
+</html>
