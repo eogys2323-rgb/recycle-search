@@ -298,7 +298,9 @@ txt += `
 onclick="showDetail('${item}')">
 
 <img
-src="${data[item].images[0].file}">
+<img
+src="${data[item].images[0].file}"
+alt="${item}">
 
 <h3>${item}</h3>
 
@@ -330,9 +332,10 @@ data[name].images.forEach(function(img){
 imgs += `
 <div class="photo-box">
 
-<img>
+<img
 src="${img.file}"
 class="detail-photo"
+alt="${img.title}"
 onclick="openImage(this.src)">
 
 <br>
@@ -368,7 +371,7 @@ ${data[name].method}
 `;
 
 }
-
+    
 searchItem();
 
 function openImage(src){
