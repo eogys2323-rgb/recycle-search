@@ -3,17 +3,14 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>폐기물 검색</title>
 </head><style>
 
 body{
     font-family: Arial, sans-serif;
-    width:100%;
-    max-width:none;
-    margin:0;
+    max-width:1200px;
+    margin:auto;
     padding:20px;
-    box-sizing:border-box;
 }
 
 h1{
@@ -21,11 +18,9 @@ h1{
 }
 
 #search{
-    width:100%;
-    max-width:600px;
+    width:300px;
     padding:10px;
     font-size:16px;
-    box-sizing:border-box;
 }
 
 button{
@@ -35,7 +30,7 @@ button{
 
 #result{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
     gap:20px;
     margin-top:20px;
 }
@@ -303,7 +298,6 @@ txt += `
 onclick="showDetail('${item}')">
 
 <img
-<img
 src="${data[item].images[0].file}"
 alt="${item}">
 
@@ -340,7 +334,6 @@ imgs += `
 <img
 src="${img.file}"
 class="detail-photo"
-alt="${img.title}"
 onclick="openImage(this.src)">
 
 <br>
@@ -376,7 +369,7 @@ ${data[name].method}
 `;
 
 }
-    
+
 searchItem();
 
 function openImage(src){
@@ -391,11 +384,15 @@ function closeImage(){
     document.getElementById("imgModal").style.display = "none";
 }
 
-document.getElementById("imgModal").addEventListener("click", function(e){
-    if(e.target.id === "imgModal"){
-        this.style.display = "none";
+document.getElementById("imgModal").onclick = function(e){
+
+    if(e.target === this){
+
+        closeImage();
+
     }
-});
+
+}
 </script>
 
 <div id="imgModal" class="modal">
