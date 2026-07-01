@@ -3,26 +3,33 @@
 
 <head>
 <meta charset="UTF-8">
+
 <title>폐기물 검색</title>
 </head><style>
 
 body{
     font-family: Arial, sans-serif;
-    max-width:1200px;
-    margin:auto;
+    width:100%;
+    max-width:none;
+    margin:0;
     padding:20px;
+    box-sizing:border-box;
 }
 
 h1{
+
     text-align:center;
+    font-size:42px;
+
 }
 
 #search{
-    width:300px;
+    width:100%;
+    max-width:600px;
     padding:10px;
-    font-size:16px;
+    font-size:21px;
+    box-sizing:border-box;
 }
-
 button{
     padding:10px 15px;
     font-size:16px;
@@ -56,12 +63,37 @@ button{
 .card h3{
     text-align:center;
     padding:10px;
+    font-size:27px;
+
 }
 
 .detail{
-    border:1px solid #ccc;
-    padding:20px;
-    border-radius:10px;
+    width:100%;
+    max-width:1200px;
+    margin:30px auto;
+    padding:30px;
+    box-sizing:border-box;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    background:white;
+    border-radius:15px;
+}
+
+.detail h2{
+    font-size:40px;
+    margin-bottom:30px;
+}
+
+.detail p{
+    width:100%;
+    max-width:900px;
+    font-size:22px;
+    line-height:1.8;
+    text-align:left;
+    margin:15px auto;
 }
 
 .detail img{
@@ -75,11 +107,29 @@ button{
 }
 
 .detail-photo{
-    width:250px;
-    height:250px;
+    width:320px;
+    height:320px;
     object-fit:cover;
-    border:1px solid #ddd;
     border-radius:10px;
+    cursor:zoom-in;
+}
+
+.search-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin:20px auto;
+    width:100%;
+}
+
+.search-box input{
+    flex:1;
+    max-width:600px;
+}
+
+.search-box button{
+    width:100px;
 }
 
 @media (max-width: 768px){
@@ -114,6 +164,7 @@ button{
     .detail{
     width:100%;
     box-sizing:border-box;
+    
 }
 
 }
@@ -183,10 +234,26 @@ cursor:pointer;
     cursor:zoom-in;
 }
 
+.photo-list{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:30px;
+    margin:20px 0 40px;
+}
+
+.photo-box{
+    text-align:center;
+}
+
 </style>
 <body>
 
 <h1>폐기물 검색</h1>
+
+<div class="search-box">
 
 <input
 id="search"
@@ -196,6 +263,8 @@ list="items">
 <datalist id="items"></datalist>
 
 <button onclick="searchItem()">검색</button>
+
+</div>
 
 <div id="categories">
 
@@ -256,6 +325,8 @@ function filterCategory(category){
 }
 
 function searchItem(){
+
+    document.getElementById("result").style.display = "grid";
 
 const q = document.getElementById("search").value.trim();
 
@@ -324,50 +395,60 @@ document.getElementById("result").innerHTML = txt;
 
 function showDetail(name){
 
-let imgs = "";
+    history.pushState(
+        { page:"detail", item:name },
+        "",
+        "#" + encodeURIComponent(name)
+    );
 
-data[name].images.forEach(function(img){
+    document.getElementById("result").style.display = "block";
 
-imgs += `
-<div class="photo-box">
+    let imgs = "";
 
-<img
-src="${img.file}"
-class="detail-photo"
-alt="${img.title}"
-onclick="openImage(this.src)">
+    data[name].images.forEach(function(img){
 
-<br>
+        imgs += `
+        <div class="photo-box">
 
-<b>${img.title}</b>
+            <img
+            src="${img.file}"
+            class="detail-photo"
+            alt="${img.title}"
+            onclick="openImage(this.src)">
 
-</div>
-`;
+            <br>
 
-});
+            <b>${img.title}</b>
 
-document.getElementById("result").innerHTML = `
+        </div>
+        `;
 
-<div class="detail">
+    });
 
-<h2>${name}</h2>
+    document.getElementById("result").innerHTML = `
 
-${imgs}
+    <div class="detail">
 
-<p>${data[name].desc}</p>
+        <h2>${name}</h2>
 
-<p>
-<b>배출방법</b><br>
-${data[name].method}
-</p>
+        <div class="photo-list">
+            ${imgs}
+        </div>
 
-<button onclick="searchItem()">
-목록으로
-</button>
+        <p>${data[name].desc}</p>
 
-</div>
+        <p>
+            <b>배출방법</b><br>
+            ${data[name].method}
+        </p>
 
-`;
+        <button onclick="history.back()">
+            목록으로
+        </button>
+
+    </div>
+
+    `;
 
 }
 
@@ -388,12 +469,31 @@ function closeImage(){
 document.getElementById("imgModal").onclick = function(e){
 
     if(e.target === this){
-
         closeImage();
+    }
+
+};
+
+window.addEventListener("popstate", function(e){
+
+    if(e.state && e.state.page === "detail"){
+
+        showDetail(e.state.item);
+
+    }else{
+
+        searchItem();
 
     }
 
-}
+});
+
+history.replaceState(
+    {page:"list"},
+    "",
+    ""
+);
+
 </script>
 
 <div id="imgModal" class="modal">
