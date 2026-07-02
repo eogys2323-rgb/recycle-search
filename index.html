@@ -19,20 +19,22 @@ body{
 h1{
 
     text-align:center;
-    font-size:42px;
+    font-size:90px;
 
 }
 
 #search{
-    width:100%;
-    max-width:600px;
-    padding:10px;
-    font-size:21px;
+    flex:1;
+    padding:14px;
+    font-size:22px;
+    border:2px solid #4CAF50;
+    border-right:none;
+    border-radius:10px 0 0 10px;
     box-sizing:border-box;
 }
 button{
-    padding:10px 15px;
-    font-size:16px;
+    padding:50px 50px;
+    font-size:35px;
 }
 
 #result{
@@ -117,10 +119,9 @@ button{
 .search-box{
     display:flex;
     justify-content:center;
-    align-items:center;
-    gap:10px;
-    margin:20px auto;
     width:100%;
+    max-width:700px;
+    margin:20px auto;
 }
 
 .search-box input{
@@ -129,9 +130,30 @@ button{
 }
 
 .search-box button{
-    width:100px;
-}
 
+    width:110px;
+    height:70px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    white-space:nowrap;
+
+    border:2px solid #4CAF50;
+    border-radius:0 10px 10px 0;
+
+    background:#4CAF50;
+    color:white;
+
+    font-size:20px;
+    font-weight:bold;
+
+    flex-shrink:0;
+
+    padding:0;
+
+}
 @media (max-width: 768px){
 
     body{
@@ -145,8 +167,14 @@ button{
     }
 
     button{
-        width:100%;
-    }
+    width:auto;
+}
+
+.search-box button{
+
+    width:90px;
+
+}
 
     #result{
         grid-template-columns:1fr;
@@ -173,19 +201,23 @@ button{
 
 display:flex;
 
+justify-content:center;
+
 flex-wrap:wrap;
 
-gap:10px;
+gap:15px;
 
-margin-top:20px;
-
-margin-bottom:20px;
+margin:25px 0;
 
 }
 
 #categories button{
 
-padding:10px 15px;
+padding:20px 35px;
+
+font-size:19px;
+
+font-weight:bold;
 
 border:none;
 
