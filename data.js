@@ -1914,7 +1914,7 @@ keywords:[
 ]
 },
 
-"시멘트,벽돌:{
+"시멘트,벽돌":{
 
 category:["일반쓰레기","건설폐기물"],
 
@@ -1926,17 +1926,17 @@ title:"시멘트 포대"
 },
 
 {
-file:"images/tlaps2jpg",
+file:"images/tlaps2.jpg",
 title:"시멘트"
 },
 
 {
-file:"images/tlaps3jpg",
+file:"images/tlaps3.jpg",
 title:"벽돌"
 },
 
 {
-file:"images/tlaps4jpg",
+file:"images/tlaps4.jpg",
 title:"벽돌"
 },
 
@@ -1956,7 +1956,7 @@ keywords:[
 ]
 },
 
-"전선류:{
+"전선류":{
 
 category:["일반쓰레기","건설폐기물"],
 
@@ -1968,7 +1968,7 @@ title:"폐전선"
 },
 
 ],
-desc:"시멘트,벽돌",
+desc:"전선류",
 method:"종량제봉투 또는 특수종량제마대에 담아서 배출",
 keywords:[
 "건설폐기물",
@@ -1980,12 +1980,6 @@ keywords:[
 "전기줄"
 ]
 },
-
-
-
-
-
-}
 
 
 
