@@ -502,7 +502,7 @@ keywords:[
 
 "재활용 불가능 비닐류":{
 
-category:["일반쓰레기;"],
+category:["일반쓰레기","재활용품"],
 
 images:[
 
