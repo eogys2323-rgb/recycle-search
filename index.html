@@ -87,14 +87,14 @@ button{
 }
 
 .detail h2{
-    font-size:40px;
+    font-size:80px;
     margin-bottom:30px;
 }
 
 .detail p{
     width:100%;
     max-width:900px;
-    font-size:22px;
+    font-size:42px;
     line-height:1.8;
     text-align:left;
     margin:15px auto;
@@ -212,7 +212,7 @@ margin:25px 0;
 
 padding:20px 35px;
 
-font-size:40px;
+font-size:38px;
 
 font-weight:bold;
 
@@ -275,6 +275,13 @@ cursor:pointer;
 
 .photo-box{
     text-align:center;
+}
+
+.photo-box b{
+    display:block;
+    margin-top:30px;
+    font-size:35px;
+    font-weight:bold;
 }
 
 </style>
@@ -484,11 +491,19 @@ function showDetail(name){
 searchItem();
 
 function openImage(src){
-    const modal = document.getElementById("imgModal");
-    const modalImg = document.getElementById("modalImg");
 
-    modal.style.display = "flex";
-    modalImg.src = src;
+    history.pushState(
+        {page:"image"},
+        "",
+        "#image"
+    );
+
+    const modal=document.getElementById("imgModal");
+    const modalImg=document.getElementById("modalImg");
+
+    modal.style.display="flex";
+    modalImg.src=src;
+
 }
 
 function closeImage(){
@@ -505,7 +520,16 @@ document.getElementById("imgModal").onclick = function(e){
 
 window.addEventListener("popstate", function(e){
 
-    if(e.state && e.state.page === "detail"){
+    // 사진이 열려있으면 사진만 닫기
+    if(document.getElementById("imgModal").style.display==="flex"){
+
+        closeImage();
+        return;
+
+    }
+
+    // 상세페이지면 다시 상세페이지
+    if(e.state && e.state.page==="detail"){
 
         showDetail(e.state.item);
 
