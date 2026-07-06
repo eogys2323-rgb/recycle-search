@@ -498,38 +498,41 @@ function openImage(src){
         "#image"
     );
 
-    const modal=document.getElementById("imgModal");
-    const modalImg=document.getElementById("modalImg");
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("modalImg");
 
-    modal.style.display="flex";
-    modalImg.src=src;
+    modal.style.display = "flex";
+    modalImg.src = src;
 
 }
 
 function closeImage(){
+
     document.getElementById("imgModal").style.display = "none";
+
 }
 
 document.getElementById("imgModal").onclick = function(e){
 
     if(e.target === this){
-        closeImage();
+
+        history.back();
+
     }
 
 };
 
 window.addEventListener("popstate", function(e){
 
-    // 사진이 열려있으면 사진만 닫기
-    if(document.getElementById("imgModal").style.display==="flex"){
+    const modal = document.getElementById("imgModal");
 
+    // 사진이 열려 있으면 사진만 닫기
+    if(modal.style.display === "flex"){
         closeImage();
         return;
-
     }
 
-    // 상세페이지면 다시 상세페이지
-    if(e.state && e.state.page==="detail"){
+    if(e.state && e.state.page === "detail"){
 
         showDetail(e.state.item);
 
