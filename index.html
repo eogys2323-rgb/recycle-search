@@ -251,16 +251,36 @@ cursor:pointer;
 }
 
 #close{
-    position:absolute;
+    position:fixed;
     top:20px;
-    right:30px;
+    right:20px;
+
+    width:80px;
+    height:80px;
+
+    background:#ff3b30;
     color:white;
-    font-size:40px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:60px;
+    font-weight:bold;
+
     cursor:pointer;
+
+    box-shadow:0 0 15px rgba(0,0,0,0.5);
+
+    z-index:10000;
+
+    user-select:none;
 }
 
-.detail-photo{
-    cursor:zoom-in;
+#close:hover{
+    background:#d60000;
 }
 
 .photo-list{
@@ -271,10 +291,6 @@ cursor:pointer;
     flex-wrap:wrap;
     gap:30px;
     margin:20px 0 40px;
-}
-
-.photo-box{
-    text-align:center;
 }
 
 .photo-box b{
@@ -356,6 +372,14 @@ function filterCategory(category){
 
     currentCategory = category;
 
+    document.getElementById("search").value = "";
+
+    history.replaceState(
+        { page:"list" },
+        "",
+        ""
+    );
+
     searchItem();
 
 }
@@ -420,7 +444,9 @@ alt="${item}">
 if(txt === ""){
 
 txt = `
+<div style="grid-column:1/-1;text-align:center;">
 <h2>검색 결과가 없습니다.</h2>
+</div>
 `;
 
 }
@@ -429,13 +455,17 @@ document.getElementById("result").innerHTML = txt;
 
 }
 
-function showDetail(name){
+function showDetail(name, addHistory = true){
 
-    history.pushState(
-        { page:"detail", item:name },
-        "",
-        "#" + encodeURIComponent(name)
-    );
+if(addHistory){
+
+history.pushState(
+    { page:"detail", item:name },
+    "",
+    "#" + encodeURIComponent(name)
+);
+
+}
 
     document.getElementById("result").style.display = "block";
 
@@ -473,16 +503,12 @@ function showDetail(name){
 
         <p>${data[name].desc}</p>
 
-        <p>
-            <b>배출방법</b><br>
-            ${data[name].method}
-        </p>
+       <p>
+    <b>배출방법</b><br>
+    ${data[name].method}
+</p>
 
-        <button onclick="history.back()">
-            목록으로
-        </button>
-
-    </div>
+</div>
 
     `;
 
@@ -509,6 +535,7 @@ function openImage(src){
 function closeImage(){
 
     document.getElementById("imgModal").style.display = "none";
+    document.getElementById("modalImg").src = "";
 
 }
 
@@ -538,7 +565,7 @@ window.addEventListener("popstate", function(e){
 
     if(e.state && e.state.page === "detail"){
 
-        showDetail(e.state.item);
+    showDetail(e.state.item,false);
 
     }else{
 
@@ -557,8 +584,8 @@ history.replaceState(
 </script>
 
 <div id="imgModal" class="modal">
-    <span id="close" onclick="closeImage()">&times;</span>
-    <img id="modalImg" onclick="event.stopPropagation();">
+    <button id="close" onclick="closeImage()">&times;</button>
+    <img id="modalImg">
 </div>
 
 </body>
