@@ -2372,7 +2372,33 @@ keywords:[
 ]
 },
 
+"교자상":{
 
+category:["일반쓰레기"],
+
+images:[
+
+{
+file:"images/ry1.jpg",
+title:"교자상"
+},
+
+{
+file:"images/ry2.jpg",
+title:"교자상"
+},
+
+],
+desc:"교자상",
+method:"종량제봉투 또는 종량제특수마대에 담아서 배출 <br>또는 대형폐기물 신청(1800-9614)",
+keywords:[
+"밥상",
+"교자",
+"소반",
+"상",
+"원목"
+]
+},
 
 
 
